@@ -23,3 +23,8 @@ logs/*.json
 Thumbs.db
 
 
+
+# Environment
+.env
+
+.env.example

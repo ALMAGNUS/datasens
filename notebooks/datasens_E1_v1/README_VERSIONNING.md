@@ -1,0 +1,17 @@
+- **2025-10-30 18:52:32** | `INIT` | Création de la structure projet et versionning
+- **2025-10-30 18:52:37** | `INIT` | Création de la structure projet et versionning
+- **2025-10-30 18:53:25** | `INIT` | Création de la structure projet et versionning
+- **2025-10-30 18:53:52** | `INIT` | Création de la structure projet et versionning
+- **2025-10-30 18:54:20** | `INIT` | Création de la structure projet et versionning
+- **2025-10-30 19:01:20** | `INIT` | Création de la structure projet et versionning
+- **2025-10-30 19:01:20** | `DB_INIT` | Initialisation de la base SQLite vide
+- **2025-10-30 19:01:20** | `DB_SCHEMA` | Création des 18 tables principales
+- **2025-10-30 19:01:20** | `DB_SEED` | Insertion du jeu de données minimal
+- **2025-10-30 19:01:21** | `ADD_DOC` | Inflation 2024
+- **2025-10-30 19:01:21** | `UPDATE_DOC` | id=2
+- **2025-10-30 19:01:21** | `DELETE_DOC` | id=2
+- **2025-10-30 19:01:21** | `DB_BACKUP` | datasens_v20251030_190121.db - Apres validation de la chaine Type-Source-Flux-Document
+- **2025-10-30 19:01:21** | `DB_ENRICH` | Ajout de 4 types, 4 sources, 4 flux, 7 documents
+- **2025-10-30 19:01:23** | `E1_COMPLETE` | Notebook E1 terminé avec succès
+- **2025-10-30 19:55:02** | `INIT` | Création de la structure projet et versionning
+- **2025-10-30 19:55:26** | `INIT` | Création de la structure projet et versionning

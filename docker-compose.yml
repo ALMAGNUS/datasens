@@ -1,0 +1,67 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: datasens_app
+    ports:
+      - "8888:8888"
+    env_file:
+      - .env
+    environment:
+      - DATASENS_PG_DSN=${DATASENS_PG_DSN:-postgresql+psycopg2://postgres:postgres@postgres:5432/postgres}
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT:-http://minio:9000}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minioadmin}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-minioadmin}
+      - MINIO_BUCKET=${MINIO_BUCKET:-datasens}
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./notebooks:/app/notebooks
+      - ./docs:/app/docs
+    depends_on:
+      - postgres
+      - minio
+
+  postgres:
+    image: postgres:15
+    container_name: datasens_pg
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  minio:
+    image: quay.io/minio/minio:RELEASE.2024-05-10T01-41-38Z
+    container_name: datasens_minio
+    command: server /data --console-address ":9001"
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ACCESS_KEY:-minioadmin}
+      - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY:-minioadmin}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  minio-mc:
+    image: quay.io/minio/mc:RELEASE.2024-05-10T01-27-26Z
+    container_name: datasens_minio_mc
+    depends_on:
+      - minio
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "mc alias set local http://minio:9000 ${MINIO_ACCESS_KEY:-minioadmin} ${MINIO_SECRET_KEY:-minioadmin} &&
+       mc mb -p local/${MINIO_BUCKET:-datasens} || true &&
+       mc anonymous set download local/${MINIO_BUCKET:-datasens} || true &&
+       sleep infinity"
+
+volumes:
+  pg_data:
+  minio_data:
+
+

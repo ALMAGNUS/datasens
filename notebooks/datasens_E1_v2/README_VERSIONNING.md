@@ -1,0 +1,1 @@
+- **2025-10-30 18:05:33 UTC** | `E1_V2_COMPLETE` | Découpage v2 en 5 notebooks
