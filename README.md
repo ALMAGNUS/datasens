@@ -47,12 +47,42 @@ Utiliser des tags pour les jalons:
 - `E1_v2`: Ingestion réelle (18 tables, 5 sources)
 - `E1_v3`: Pipeline complet (36 tables, Prefect + MinIO + PostgreSQL)
 
-Démarrage rapide
-----------------
+Démarrage rapide (Docker - recommandé)
+---------------------------------------
+
+**Pour le jury / démonstration (2 minutes):**
+
+```bash
+# 1. Cloner le dépôt
+git clone https://github.com/ALMAGNUS/datasens.git
+cd datasens
+
+# 2. Lancer le stack complet (Jupyter + Postgres + MinIO)
+docker compose up -d --build
+
+# 3. Accéder à Jupyter Lab
+# Ouvrir: http://localhost:8888
+# Token affiché dans les logs: docker compose logs app | grep token
+```
+
+**Stack Docker:**
+- Jupyter Lab: http://localhost:8888
+- PostgreSQL: localhost:5433 (user: `postgres`, pwd: `postgres`, db: `postgres`)
+- MinIO Console: http://localhost:9003 (user: `minioadmin`, pwd: `minioadmin`)
+- MinIO API: http://localhost:9002
+
+**Arrêter le stack:**
+```bash
+docker compose down
+```
+
+Démarrage local (sans Docker)
+-----------------------------
 
 1. Créer un environnement Python 3.10+
 2. Installer les dépendances: `pip install -r requirements.txt`
-3. Ouvrir les notebooks sous `notebooks/datasens_E1_v1/`
+3. Démarrer PostgreSQL et MinIO localement (ou utiliser les services Docker)
+4. Ouvrir les notebooks sous `notebooks/datasens_E1_v3/`
 
 Mode Démo (10–15 min)
 ---------------------
