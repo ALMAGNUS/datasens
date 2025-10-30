@@ -78,6 +78,7 @@ Variables d’environnement
 Annotation FR (CamemBERT / FlauBERT)
 ------------------------------------
 
+- Modèles par défaut (priorité FR): CamemBERT puis FlauBERT
 - Nettoyage + détection de langue (priorité FR)
 - Sentiment/polarité: modèles FR en priorité (CamemBERT, FlauBERT). Si indisponible, heuristique simple.
 - NER: spaCy modèle FR (fallback neutre si absent)
