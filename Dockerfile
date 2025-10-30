@@ -21,6 +21,6 @@ COPY . /app
 EXPOSE 8888
 
 # Default: start Jupyter Lab, token disabled for simplicity in local demo
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token="]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=", "--allow-root"]
 
 
