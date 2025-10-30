@@ -1,0 +1,17 @@
+jupyter
+ipykernel
+pandas
+numpy
+sqlalchemy
+psycopg2-binary
+pydantic
+faker
+pyyaml
+prefect
+minio
+rich
+python-dotenv
+requests
+plotly
+openpyxl
+
