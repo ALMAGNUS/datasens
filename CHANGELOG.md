@@ -13,6 +13,7 @@ The format is based on Keep a Changelog, and this project adheres to Semantic Ve
 
 ### Changed
 - README aligned with technical reference; added ML-ready export section.
+- README and guide clarified: E2 annotation defaults to CamemBERT puis FlauBERT (FR priority models).
 
 ### Fixed
 - Notebook sanitization for invalid surrogate characters.
