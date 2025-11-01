@@ -2463,6 +2463,160 @@ plt.show()
 
 ---
 
+## 🎨 Guide Complet des Visualisations - Fil d'Ariane Narratif
+
+> **Objectif pédagogique** : Toutes les visualisations du projet sont conçues comme un **fil narratif** pour guider l'observateur à travers le pipeline. Chaque graphique raconte une partie de l'histoire des données.
+
+---
+
+### 🎬 1. Dashboard Narratif - Vue d'Ensemble du Pipeline
+
+**Où** : `01_setup_env.ipynb`, `02_schema_create.ipynb`, `03_ingest_sources.ipynb`, `04_crud_tests.ipynb`, `05_snapshot_and_readme.ipynb` (tous les notebooks v1/v2/v3)
+
+**Objectif** : Montrer où nous en sommes dans le pipeline global avec une timeline visuelle.
+
+**Structure** : 6 étapes du pipeline (Collecte → DataLake → Nettoyage → ETL → Annotation → Export) affichées sous forme de timeline horizontale avec cercles colorés selon le statut (✅ Terminé / 🔄 En cours / ⏳ À venir).
+
+**Couleurs** :
+- `#4ECDC4` (Turquoise) = Terminé
+- `#FECA57` (Jaune) = En cours  
+- `#E8E8E8` (Gris) = À venir
+
+**Valeur narrative** : L'observateur sait immédiatement où il se trouve dans le pipeline global.
+
+---
+
+### 📊 2. Timeline Narrative Globale (E1_v3 uniquement)
+
+**Où** : `03_ingest_sources.ipynb` (v3), après le dashboard narratif
+
+**Objectif** : Visualiser le parcours complet des données depuis les sources jusqu'au dataset final.
+
+**Structure** : 5 étapes (Sources → DataLake → Nettoyage → PostgreSQL → Dataset) avec graphique de progression cumulative et couleurs narratives distinctes.
+
+**Couleurs narratives** :
+- Rouge (`#FF6B6B`) = Données brutes
+- Jaune (`#FECA57`) = Transformation
+- Turquoise (`#4ECDC4`) = Nettoyage
+- Bleu (`#45B7D1`) = Structuration
+- Vert (`#96CEB4`) = Final
+
+**Valeur narrative** : Montre la transformation progressive des données brutes en dataset structuré.
+
+---
+
+### 🎭 3. Storytelling Entre Sources - AVANT la Collecte
+
+**Où** : `03_ingest_sources.ipynb` (v1/v2/v3), avant chaque source
+
+**Objectif** : Expliquer le contexte et l'objectif de la collecte avant de l'effectuer.
+
+**Contenu** :
+- État actuel du pipeline (sources, documents, flux déjà collectés)
+- Graphique bar chart (3 barres : Sources, Flux, Documents)
+- Objectif de la collecte
+- Message de lancement
+
+**Valeur narrative** : Chaque nouvelle source s'inscrit dans un contexte de progression continue.
+
+---
+
+### ✅ 4. Storytelling Entre Sources - APRÈS la Collecte (v3 uniquement)
+
+**Où** : `03_ingest_sources.ipynb` (v3), après chaque source
+
+**Objectif** : Montrer l'impact de la collecte sur le pipeline global.
+
+**Structure** : Double graphique (côte à côte)
+- **Gauche** : Contribution spécifique de cette source (documents ajoutés)
+- **Droite** : Progression globale du pipeline (total cumulé)
+
+**Valeur narrative** : Chaque source apporte sa contribution visible au dataset final.
+
+---
+
+### 📋 5. Tables de Données Réelles (Pandas DataFrame)
+
+**Où** : Tous les notebooks, après chaque opération importante
+
+**Objectif** : Montrer le **contenu réel** des données, pas seulement des statistiques.
+
+**Format** : `display(pd.DataFrame())` avec colonnes et lignes visibles dans le notebook.
+
+**Valeur narrative** : Prouve que les données sont réelles et structurées, pas simulées.
+
+---
+
+### 📊 6. Graphiques Statistiques par Source
+
+#### 6.1 Bar Chart - Comparaison PostgreSQL vs MinIO (Kaggle)
+
+**Où** : `03_ingest_sources.ipynb` (v3), après collecte Kaggle  
+**Objectif** : Comparer le volume entre PostgreSQL (structuré) et MinIO (brut).
+
+#### 6.2 Pie Chart - Répartition par Langue
+
+**Où** : `03_ingest_sources.ipynb` (v2/v3), après collecte Kaggle  
+**Objectif** : Montrer la distribution des langues dans le dataset.
+
+#### 6.3 Bar Chart - Événements par Thème (GDELT)
+
+**Où** : `03_ingest_sources.ipynb` (v3), après collecte GDELT  
+**Objectif** : Montrer la distribution des événements GDELT par thème.
+
+---
+
+### 📈 7. Visualisations CRUD (04_crud_tests.ipynb)
+
+- **CREATE** : Graphique bar chart montrant les documents ajoutés
+- **UPDATE** : Graphique comparatif avant/après l'opération
+- **DELETE** : Graphique bar chart montrant les documents supprimés
+- **QA** : Graphiques qualité (doublons, NULL, KPIs)
+
+---
+
+### 📦 8. Visualisations Export Dataset (05_snapshot_and_readme.ipynb)
+
+- **Distribution par Type de Donnée** : Bar chart selon classification Médiamétrie
+- **Distribution par Source** : Bar chart horizontal montrant la contribution de chaque source
+- **Distribution par Flux** : Pie chart montrant la répartition par format
+
+---
+
+### 🎨 Système de Couleurs Narratif
+
+| Couleur | Hex | Signification | Usage |
+|---------|-----|---------------|-------|
+| 🔴 Rouge | `#FF6B6B` | Données brutes, erreurs | Sources, DELETE, doublons |
+| 🟡 Jaune | `#FECA57` | Transformation en cours | DataLake, nettoyage |
+| 🔵 Turquoise | `#4ECDC4` | Données structurées, succès | PostgreSQL, CREATE |
+| 🔵 Bleu | `#45B7D1` | Structuration avancée | UPDATE, dataset |
+| 🟢 Vert | `#96CEB4` | Données finales | Dataset IA, export |
+
+---
+
+### 📊 Résumé des Visualisations par Notebook
+
+| Notebook | Visualisations | Objectif Narratif |
+|----------|----------------|-------------------|
+| **01_setup_env** | Dashboard narratif | Montrer le démarrage |
+| **02_schema_create** | Dashboard narratif | Montrer la création structure |
+| **03_ingest_sources** | Dashboard + Timeline + Storytelling + Tables + Graphiques | Raconter la collecte source par source |
+| **04_crud_tests** | Dashboard + Graphiques CRUD + QA | Prouver qualité et validité |
+| **05_snapshot_and_readme** | Dashboard + Distribution + Export | Montrer dataset final prêt |
+
+---
+
+### 💡 Bonnes Pratiques des Visualisations
+
+1. **Cohérence** : Toujours utiliser le même système de couleurs
+2. **Lisibilité** : Ajouter les valeurs sur les barres (`ax.text()`)
+3. **Contexte** : Titres explicites et légendes claires
+4. **Tables réelles** : Toujours afficher `display(pd.DataFrame())` pour prouver les données
+5. **Progression** : Montrer l'évolution (avant/après, cumulé)
+
+---
+
 ## 📚 Glossaire technique (bible rapide)
 
 - ETL: Extract → Transform → Load. Chaîne d'ingestion: extraction, transformation (nettoyage/normalisation/enrichissement), chargement (DB/Storage).

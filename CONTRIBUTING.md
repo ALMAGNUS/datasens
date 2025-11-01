@@ -104,6 +104,10 @@ Puis créer une Pull Request sur GitHub avec :
 - **Requêtes paramétrées** : Toujours utiliser `text("... :param")` avec dict
 - **Noms de tables** : Préfixe `tXX_` pour E1_v3 (ex: `t04_document`)
 - **Sécurité** : Validation whitelist pour identifiants dynamiques
+  - Utiliser `assert_valid_identifier()` avant utilisation de noms dynamiques
+  - Utiliser `load_whitelist_tables()` pour valider contre `information_schema`
+  - **JAMAIS** de f-strings/concaténation pour valeurs utilisateur
+  - Voir [SECURITY.md](SECURITY.md) pour détails complets
 
 ---
 

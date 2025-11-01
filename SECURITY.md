@@ -44,6 +44,8 @@ conn.execute("SELECT * FROM " + table_name + " WHERE id = " + str(user_id))
 
 **Référence** : Tous les notebooks utilisent `text("... :param")` avec dictionnaires de paramètres.
 
+**Implémentation** : Les fonctions `assert_valid_identifier()` et `load_whitelist_tables()` sont implémentées dans `notebooks/datasens_E1_v3/03_ingest_sources.ipynb` (section fonctions utilitaires de sécurité).
+
 ---
 
 ### 2. Gestion des Secrets

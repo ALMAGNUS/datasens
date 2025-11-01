@@ -173,7 +173,11 @@ Variables principales :
 - **MinIO DataLake** : `MINIO_ENDPOINT`, `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`, `MINIO_BUCKET`
 - **API Keys** (optionnelles) : `OWM_API_KEY`, `NEWSAPI_KEY`, `KAGGLE_USERNAME`, `KAGGLE_KEY`, `REDDIT_CLIENT_ID`, `YOUTUBE_API_KEY`
 
-**🔒 Sécurité** : Le fichier `.env` est ignoré par Git. Voir [SECURITY.md](SECURITY.md) pour les bonnes pratiques de sécurité.
+**🔒 Sécurité** : 
+- Le fichier `.env` est ignoré par Git
+- Requêtes SQL paramétrées pour prévenir injection SQL
+- Fonctions de validation implémentées (`assert_valid_identifier`, `load_whitelist_tables`)
+- Voir [SECURITY.md](SECURITY.md) pour les détails complets
 
 Annotation Simple (E1_v3) - Préparation Dataset pour E2
 --------------------------------------------------------
