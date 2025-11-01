@@ -2,32 +2,50 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
+*.so
 .venv/
 venv/
+ENV/
+env/
 
 # Jupyter
 .ipynb_checkpoints/
+*.ipynb_checkpoints/
 
-# Data
+# Data (bruts et temporaires uniquement - garder exports gold)
 data/tmp/
 data/raw/
 data/silver/
-data/gold/
+# Note: data/gold/ est commité (exports dataset IA)
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+datasens.db
+versions/
 
 # Logs
 logs/*.txt
+logs/*.log
 logs/*.json
+!logs/.gitkeep
 
 # OS
 .DS_Store
 Thumbs.db
-
-
+desktop.ini
 
 # Environment
 .env
-
-.env.example
+# Note: .env.example EST commité (template)
 
 # Generated docs
 *.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

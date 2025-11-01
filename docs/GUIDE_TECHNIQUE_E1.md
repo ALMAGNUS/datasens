@@ -32,7 +32,7 @@
 
 # 🚀 Guide Technique DataSens E1 - Notebook Académique
 
-> **Approche pédagogique** : Code inline simple et transparent dans un seul notebook Jupyter. Pas de modules `.py` externes → tout visible pour le jury ! 💪
+> **Approche pédagogique** : Code inline simple et transparent dans un seul notebook Jupyter. Pas de modules `.py` externes → tout visible et compréhensible ! 💪
 
 ---
 
@@ -44,6 +44,99 @@
 4. [Architecture du notebook](#architecture)
 5. [Chaque cellule détaillée](#cellules-détaillées)
 6. [Troubleshooting](#troubleshooting)
+
+---
+
+## 🎯 Vision : Pipeline ETL d'Annotation et Structuration pour IA
+
+DataSens est conçu comme un **bouffeur de données** et un **classifieur professionnel** pour générer des datasets de qualité destinés à l'enrichissement IA.
+
+### 🔄 Flux Complet du Pipeline
+
+```
+COLLECTE (6 types) → TRANSFORMATION → CLASSIFICATION → ANNOTATION → STRUCTURATION → EXPORT IA
+    ↓                    ↓                 ↓              ↓              ↓            ↓
+1. Fichier plat    Déduplication    Médiamétrie    Simple (E1)   PostgreSQL   Parquet/CSV
+2. Base données    Nettoyage       5 types        IA (E2)       MinIO        Prêt E2
+3. API REST        Normalisation   Professionnel  CamemBERT     DataLake
+4. Web Scraping    Validation      36/37 tables   FlauBERT
+5. Big Data        Enrichissement
+6. Baromètres
+```
+
+### 📊 Classification Professionnelle (Standards Médiamétrie)
+
+Chaque donnée est **classifiée dès l'entrée** du pipeline selon 5 catégories professionnelles :
+
+| Type | Description | Exemples | Fréquence |
+|-----|-------------|----------|-----------|
+| **Nomenclature** | Données de classification/référence | Codes pays ISO, CSP, unités | Mensuelle |
+| **Données Maîtres** | Données partagées par processus | Clients, produits, référentiels | Quotidienne |
+| **Données Opérationnelles** | Données liées aux opérations | Transactions, tickets, flux | Secondes |
+| **Données Décisionnelles** | Données consolidées pour analyses | Faits de vente, dimensions | Quotidienne |
+| **Métadonnées** | Données sur les données | Schémas, versions, logs | Variable |
+
+Cette classification est **automatiquement appliquée** dès l'insertion dans `t02_source` via `t01_type_donnee`.
+
+### 🤖 Annotation : Simple (E1_v3) → IA Avancée (E2)
+
+**E1_v3 (Actuel)** : Annotation simple pour préparer le dataset
+- Nettoyage (normalisation texte, encodage)
+- Détection de langue (priorité FR)
+- Déduplication SHA256
+- Validation format, longueur, champs requis
+- **Résultat** : Dataset propre et structuré
+
+**E2 (À venir)** : Enrichissement IA avec modèles français
+- **Sentiment analysis** : FlauBERT, CamemBERT
+- **NER (Named Entity Recognition)** : spaCy modèle FR
+- **Mots-clés** : YAKE FR
+- **Embeddings** : sentence-transformers
+- **Résultat** : Dataset enrichi pour entraînement modèles IA
+
+---
+
+## 🎯 Configuration Flexible des Sources (E1_v3)
+
+**Toutes les sources sont configurées dans `config/sources_config.json`**
+
+Cette approche permet d'ajouter/modifier facilement des sources sans toucher au code Python :
+
+### Structure de la Configuration
+
+```json
+{
+  "version": "1.0",
+  "sources": [
+    {
+      "id": "source_001",
+      "nom": "Kaggle CSV Dataset",
+      "type_source": "Données Maîtres",
+      "collector": "csv_file",
+      "actif": true,
+      "priorite": "haute",
+      "params": { ... }
+    }
+  ]
+}
+```
+
+### Utilisation Académique
+
+- **Le notebook `03_ingest_sources.ipynb` charge la configuration** au démarrage
+- **La structure reste source par source** pour la clarté pédagogique
+- **Pour ajouter une source** : Éditez `config/sources_config.json` puis implémentez la collecte dans le notebook
+
+**Guide complet** : `config/README_SOURCES.md`
+
+### Classification Types de Données (Médiamétrie)
+
+Les types de données utilisent la classification professionnelle :
+- **Nomenclature** : Données de classification (mensuelle)
+- **Données Maîtres** : Données de référence (quotidienne)
+- **Données Opérationnelles** : Données d'activité (secondes)
+- **Données Décisionnelles** : Données d'analyse (quotidienne)
+- **Métadonnées** : Données sur les données (variable)
 
 ---
 
@@ -90,7 +183,7 @@ Recommandations démo courte (plots max):
 - ✅ **Try/except** par source → robustesse et logs détaillés
 - ✅ **Format unifié** → toutes les sources → même structure DataFrame
 
-**Le but** : Démontrer au jury qu'on maîtrise la collecte multi-sources avec du code propre et compréhensible.
+**Le but** : Démontrer la maîtrise de la collecte multi-sources avec du code propre et compréhensible.
 
 ---
 
@@ -98,7 +191,7 @@ Recommandations démo courte (plots max):
 
 **Pourquoi on a tout mis dans le notebook ?**
 
-1. **Transparence** : Le jury voit **tout le code** ligne par ligne
+1. **Transparence** : Tout le code est visible ligne par ligne
 2. **Simplicité** : Pas de `import datasens.collectors.xxx` → code direct
 3. **Debugging** : Logs affichés directement dans les cellules
 4. **Académique** : Montre qu'on code from scratch, pas copy/paste de libs
@@ -128,7 +221,7 @@ for post in reddit.subreddit("france").hot(limit=50):
 print(f"✅ Reddit: {len(all_data)} posts")  # Log direct
 ```
 
-→ **Résultat** : Le jury voit exactement ce qu'on fait, pas de boîte noire !
+→ **Résultat** : Le code est transparent, pas de boîte noire !
 
 ---
 
@@ -136,7 +229,7 @@ print(f"✅ Reddit: {len(all_data)} posts")  # Log direct
 
 **Pourquoi on a ajouté un système de logging détaillé ?**
 
-Le jury (et nous-mêmes) a besoin de **tracer** ce qui se passe pendant la collecte :
+Il est essentiel de **tracer** ce qui se passe pendant la collecte :
 - ✅ Quelles sources **fonctionnent** ?
 - ✅ Quelles sources **échouent** et **pourquoi** ?
 - ✅ Combien de **documents collectés** par source ?
@@ -240,7 +333,7 @@ Traceback (most recent call last):
 requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://signal.conso.gouv.fr/api/reports
 ```
 
-### Avantages pour le jury
+### Avantages du logging structuré
 
 | Aspect | Sans logging | Avec logging |
 |--------|--------------|--------------|
@@ -248,7 +341,7 @@ requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://sign
 | **Debugging** | ❌ "Erreur inconnue" | ✅ Traceback complet dans `errors_*.log` |
 | **Audit** | ❌ Impossible de retracer après exécution | ✅ Historique complet dans `logs/` |
 | **Production** | ❌ Pas scalable | ✅ Prêt pour monitoring industriel |
-| **Pédagogie** | ❌ Jury voit juste le résultat final | ✅ Jury peut suivre **chaque étape** |
+| **Pédagogie** | ❌ Seul le résultat final visible | ✅ Chaque étape est tracée et observable |
 
 ### Comment consulter les logs (PowerShell)
 
@@ -271,7 +364,7 @@ Select-String -Path logs\collecte_*.log -Pattern "Reddit"
 - ✅ Démontre **best practices industrielles** (logging production-ready)
 - ✅ Permet **debugging rapide** si une source échoue
 - ✅ Fournit **métriques détaillées** par source
-- ✅ Facilite **l'audit** du jury (tout est tracé)
+- ✅ Facilite **l'audit** et le suivi (tout est tracé)
 - ✅ Prouve qu'on sait gérer **les erreurs proprement** (pas de crash brutal)
 
 ---
@@ -335,7 +428,8 @@ Internet/Fichiers/APIs/Bases SQL
 - **ETL industriel** : Extract → Transform → Load avec gestion d'erreurs
 - **Multi-sources** : On unifie RSS, API, scraping, CSV, SQL dans un seul pipeline
 - **Data quality** : Dédup par SHA256, cleaning regex, validation schemas
-- **Auto-annotation** : Catégorisation, sentiment analysis, keyword extraction
+- **Annotation simple (E1_v3)** : Nettoyage, déduplication, QA de base (préparation pour E2)
+- **Annotation IA avancée (E2)** : Catégorisation, sentiment analysis, keyword extraction avec CamemBERT/FlauBERT
 - **Stockage hybride** : PostgreSQL (OLTP) + MinIO (Object Storage S3-like)
 - **CRUD complet** : On gère le cycle de vie complet de la data
 - **Scalable** : Prêt pour des millions de docs (indexation, partitioning)
@@ -459,7 +553,7 @@ flux_id = create_flux("Web Scraping Multi-Sources", "html", manifest_uri=minio_u
 insert_documents(df_scraping[["titre", "texte", "langue", "date_publication", "hash_fingerprint"]], flux_id)
 ```
 
-**🔑 Points clés pour le jury** :
+**🔑 Points clés** :
 
 1. **Code inline simple** : Tout le code dans le notebook, pas de dépendances externes
 2. **9 sources en 1 cellule** : Reddit, YouTube, SignalConso, Trustpilot, ViePublique, DataGouv + 3 APIs
@@ -485,13 +579,13 @@ df_scraping = pd.DataFrame(all_scraping_data)
 - ✅ Démontre **code production-ready** (retry logic, logging, error handling inline)
 - ✅ Démontre **notebook autonome** (pas de dépendances externes, tout inline)
 
-### Ce qu'on prouve au jury
+### Objectifs atteints
 
 ✅ On sait coder un ETL from scratch (pas besoin d'Airflow pour une démo)
 ✅ On comprend l'archi data (OLTP vs Object Storage)
 ✅ On maîtrise le SQL (Merise, CRUD, indexes)
 ✅ On gère la qualité de data (dédup, cleaning, validation)
-✅ On fait de l'IA basique (annotation auto)
+✅ On fait de l'annotation simple (préparation dataset pour E2)
 ✅ On visualise les métriques (matplotlib/seaborn)
 ✅ Le code est clean, commenté, reproductible
 ✅ **[INLINE]** Code inline dans notebook (9 sources, pas de .py externes)
@@ -613,7 +707,7 @@ fingerprint = hashlib.sha256("Mon article".encode()).hexdigest()
 
 ## 🎯 Valeur ajoutée pour E1
 
-- ✅ **Code micro-step** → Transparence totale (crucial pour jury technique)
+- ✅ **Code micro-step** → Transparence totale pour la compréhension technique
 - ✅ **Merise + Relationnel** → Rigueur méthodologique
 - ✅ **Gestion doublons** → Évite pollution de la base
 - ✅ **Visualisations** → Impact business visible
@@ -648,8 +742,7 @@ DataSens_Project/
 │   ├── INSTALLATION.md         # Guide d'installation pas à pas
 │   └── MCD_MLD.pdf             # Modèles Merise
 ├── notebooks/
-│   ├── demo_jury_etl_interactif.ipynb
-│   └── GUIDE_TECHNIQUE_JURY.md
+│   └── demo_etl_interactif.ipynb
 ├── scripts/
 │   ├── init_db.sql             # Création tables
 │   └── start-demo.ps1          # Script de démarrage automatique
@@ -804,7 +897,7 @@ POSTGRES_DB=datasens
 #### Étape 5 : Lancer Jupyter
 
 ```bash
-jupyter notebook notebooks/demo_jury_etl_interactif.ipynb
+jupyter notebook notebooks/demo_etl_interactif.ipynb
 ```
 
 ---
@@ -830,7 +923,7 @@ Ce script fait :
 
 ### Exécuter le notebook
 
-1. Ouvrir `notebooks/demo_jury_etl_interactif.ipynb`
+1. Ouvrir `notebooks/demo_etl_interactif.ipynb`
 2. Exécuter les cellules **dans l'ordre** (Cell → Run All)
 3. Les graphiques s'affichent automatiquement
 
@@ -887,7 +980,7 @@ psql -U ds_user -d datasens -f data/sample_data.sql
 | `docs/INSTALLATION.md` | Guide d'installation détaillé |
 | `docs/ARCHITECTURE.md` | Schémas techniques (flux ETL) |
 | `docs/MCD_MLD.pdf` | Modèles Merise (conceptuel + logique) |
-| `notebooks/GUIDE_TECHNIQUE_JURY.md` | Explication code ligne par ligne |
+| `docs/GUIDE_TECHNIQUE_E1.md` | Explication code cellule par cellule |
 
 ---
 
@@ -1339,7 +1432,7 @@ if (Test-Path $SqlDump) {
 # ===== LANCEMENT JUPYTER =====
 Write-Step "Démarrage de Jupyter Notebook..."
 
-$NotebookPath = Join-Path $ProjectRoot "notebooks\demo_jury_etl_interactif.ipynb"
+$NotebookPath = Join-Path $ProjectRoot "notebooks\demo_etl_interactif.ipynb"
 
 Write-Host "`n╔════════════════════════════════════════╗" -ForegroundColor Green
 Write-Host "║        Installation terminée ! ✅       ║" -ForegroundColor Green
@@ -1384,7 +1477,7 @@ jupyter notebook $NotebookPath
 
 - [ ] README.md complet
 - [ ] INSTALLATION.md avec captures d'écran
-- [ ] GUIDE_TECHNIQUE_JURY.md à jour
+- [ ] GUIDE_TECHNIQUE_E1.md à jour
 - [ ] Licence choisie (MIT recommandée)
 
 #### ✅ Tests
@@ -1567,7 +1660,7 @@ docker-compose up -d
 - [ ] README.md avec badges
 - [ ] LICENSE file (MIT)
 - [ ] INSTALLATION.md avec screenshots
-- [ ] GUIDE_TECHNIQUE_JURY.md complet
+- [ ] GUIDE_TECHNIQUE_E1.md complet
 - [ ] .env.example configuré
 
 #### Code
@@ -2358,7 +2451,7 @@ plt.show()
 - `numpy` 1.26.0 (calculs statistiques)
 - `scipy` 1.11.3 (corrélations)
 
-**Valeur ajoutée pour le jury** :
+**Valeur ajoutée** :
 - ✅ **8 types de visualisations différentes** → maîtrise complète
 - ✅ **Code simple et lisible** → 10-20 lignes par graphique
 - ✅ **Insights actionnables** → chaque plot répond à une question métier

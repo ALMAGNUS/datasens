@@ -1,18 +1,43 @@
+# Core
 jupyter
 ipykernel
+python-dotenv
+
+# Data processing
 pandas
 numpy
+pyarrow
+
+# Database
 sqlalchemy
 psycopg2-binary
+
+# Data collection
+requests
+feedparser
+beautifulsoup4
+praw
+google-api-python-client
+
+# Utilities
+tenacity
+tqdm
 pydantic
 faker
 pyyaml
-prefect
-minio
 rich
-python-dotenv
-requests
+
+# Visualization
+matplotlib
 plotly
 openpyxl
+
+# Infrastructure
+minio
+prefect
+
+# Development
 ruff
+nbformat
+
 

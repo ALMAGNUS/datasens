@@ -406,13 +406,19 @@ INSERT INTO t10_valence (label, description)
 VALUES ('positive','valence positive'), ('neutre','valence neutre'), ('negative','valence négative')
 ON CONFLICT (label) DO NOTHING;
 
+-- Classification professionnelle des types de données (selon standards médiamétrie)
 INSERT INTO t01_type_donnee (libelle, description, frequence_maj, categorie_metier)
 VALUES
-  ('Fichier','Fichiers plats CSV/Parquet/JSON','hebdomadaire','descriptive'),
-  ('Base de Données','Données relationnelles (PostgreSQL/SQLite)','quotidienne','usage'),
-  ('API','Services REST externes','temps réel','usage'),
-  ('Web Scraping','Extraction conforme RGPD','hebdomadaire','evaluation'),
-  ('Big Data','Flux massifs (GDELT/GKG, logs)','quotidienne','qualite')
+  -- 1. Données de classification ou Nomenclatures (Reference Data)
+  ('Nomenclature','Système de catégorisation/classification servant de référence aux autres données (unités de mesure, codes pays ISO, CSP...)','mensuelle','classification'),
+  -- 2. Données de références ou données maîtres (Master Data)
+  ('Données Maîtres','Données partagées par un ensemble de processus et d''applications (clients, produits, référentiels...)','quotidienne','reference'),
+  -- 3. Données opérationnelles (Operational Data)
+  ('Données Opérationnelles','Données liées à des opérations et activités (transactions, demandes, tickets...)','secondes','operationnelle'),
+  -- 4. Données décisionnelles (Analytical Data)
+  ('Données Décisionnelles','Données consolidées permettant de faire des analyses à des fins de prise de décisions (faits de vente, dimensions...)','quotidienne','decisionnelle'),
+  -- 5. Métadonnées (Metadata)
+  ('Métadonnées','Données sur les données (descriptives, structurelles, administratives, usages, référence, statistiques, légales...)','variable','metadonnees')
 ON CONFLICT DO NOTHING;
 
 -- (Optionnel) pays France

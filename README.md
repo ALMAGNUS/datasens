@@ -2,26 +2,80 @@ DataSens — Projet
 =================
 
 Voir le guide technique: docs/GUIDE_TECHNIQUE_E1.md
-Voir la référence technique étendue: docs/GUIDE_TECHNIQUE_JURY.md
 
 ![GitHub Release](https://img.shields.io/github/v/release/ALMAGNUS/datasens?include_prereleases)
 ![GitHub Stars](https://img.shields.io/github/stars/ALMAGNUS/datasens?style=social)
 ![GitHub Issues](https://img.shields.io/github/issues/ALMAGNUS/datasens)
 ![Code Size](https://img.shields.io/github/languages/code-size/ALMAGNUS/datasens)
 ![License](https://img.shields.io/github/license/ALMAGNUS/datasens)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Last Commit](https://img.shields.io/github/last-commit/ALMAGNUS/datasens)
+[![Security](https://img.shields.io/badge/Security-Policy-blue.svg)](SECURITY.md)
+[![Contributing](https://img.shields.io/badge/Contributing-Guide-orange.svg)](CONTRIBUTING.md)
 
 Liens rapides
 -------------
 
-- Dépôt: https://github.com/ALMAGNUS/datasens
-- Sujets (issues): https://github.com/ALMAGNUS/datasens/issues
-- Releases: https://github.com/ALMAGNUS/datasens/releases
-- Discussions: https://github.com/ALMAGNUS/datasens/discussions
-- Pull Requests: https://github.com/ALMAGNUS/datasens/pulls
+- 📦 **Dépôt** : https://github.com/ALMAGNUS/datasens
+- 🐛 **Issues** : https://github.com/ALMAGNUS/datasens/issues
+- 🚀 **Releases** : https://github.com/ALMAGNUS/datasens/releases
+- 💬 **Discussions** : https://github.com/ALMAGNUS/datasens/discussions
+- 🔀 **Pull Requests** : https://github.com/ALMAGNUS/datasens/pulls
+- 🔒 **Sécurité** : [SECURITY.md](SECURITY.md)
+- 🤝 **Contribuer** : [CONTRIBUTING.md](CONTRIBUTING.md)
 
 Description
 -----------
+
+**DataSens** est un **pipeline ETL complet d'annotation et de structuration de dataset pour l'IA**.
+
+### 🎯 Vision du Projet
+
+DataSens est un **bouffeur de données** et un **classifieur performant** qui :
+
+1. **Collecte** depuis **6 types de sources** :
+   - 📄 **Fichier plat** (CSV Kaggle)
+   - 🗄️ **Base de données** (SQLite/PostgreSQL)
+   - 🌐 **API REST** (OpenWeatherMap, NewsAPI)
+   - 🕷️ **Web Scraping** (Reddit, YouTube, Vie-publique, data.gouv)
+   - 🌍 **Big Data** (GDELT GKG - Global Knowledge Graph)
+   - 📊 **Baromètres d'opinion** (INSEE, IFOP, ADEME - en préparation E2)
+
+2. **Transforme et Structure** :
+   - **Déduplication** SHA256 pour éviter les doublons
+   - **Nettoyage** et normalisation (texte, dates, langues)
+   - **Classification professionnelle** selon standards Médiamétrie (Nomenclature, Données Maîtres, Opérationnelles, Décisionnelles, Métadonnées)
+   - **Annotation simple** (E1_v3) : nettoyage, déduplication, QA de base
+   - **Annotation IA avancée** (E2) : CamemBERT, FlauBERT pour sentiment, NER, keywords
+
+3. **Charge et Stocke** :
+   - **PostgreSQL** : Données structurées (36/37 tables Merise) pour requêtes SQL
+   - **MinIO DataLake** : Données brutes (S3-like) pour analyses Big Data
+   - **Stockage hybride** : 50/50 split selon type de source
+
+4. **CRUD Complet** :
+   - **CREATE** : Insertion multi-sources avec traçabilité
+   - **READ** : Requêtes jointes complexes avec visualisations
+   - **UPDATE** : Mise à jour contrôlée
+   - **DELETE** : Suppression avec intégrité référentielle
+
+### 🚀 Pipeline ETL Multi-Sources
+
+**Extract → Transform → Load** avec :
+- ✅ Logging structuré (fichiers + traceback)
+- ✅ Gestion d'erreurs robuste (try/except + fallback)
+- ✅ Déduplication automatique (SHA256 fingerprinting)
+- ✅ Traçabilité complète (flux, manifests JSON, versioning Git)
+- ✅ Visualisations à chaque étape (pandas + matplotlib)
+- ✅ Contrôles qualité (doublons, NULL, intégrité FK)
+
+### 📊 Export Dataset Structuré pour IA
+
+Le pipeline génère un **dataset nettoyé et annoté**, prêt pour enrichissement IA :
+- Format **Parquet** (optimisé pour ML/IA)
+- Format **CSV** (compatibilité)
+- Export dans `data/gold/dataset_ia/`
+- Métadonnées complètes (source, type, thèmes, territoire)
 
 Structure académique DataSens. Pilotage par notebooks Jupyter, versionné sur GitHub.
 
@@ -44,8 +98,8 @@ Versionnage
 Utiliser des tags pour les jalons:
 
 - `E1_v1`: Schéma prototype (10 tables) données simulées
-- `E1_v2`: Ingestion réelle (18 tables, 5 sources)
-- `E1_v3`: Pipeline complet (36 tables, Prefect + MinIO + PostgreSQL)
+- `E1_v2`: Ingestion réelle (18 tables, 6 sources)
+- `E1_v3`: Pipeline complet (36/37 tables, MinIO + PostgreSQL) - **Dataset structuré pour IA**
 
 Démarrage rapide (Docker - recommandé)
 ---------------------------------------
@@ -95,31 +149,64 @@ Objectif: exécuter un notebook unique (sans `.py` externe) montrant ingestion m
 1. Ouvrir le notebook et exécuter toutes les cellules.
 2. Suivre le logging inline (console) et vérifier les fichiers `logs/` (`collecte_*.log`, `errors_*.log`).
 3. Vérifier le schéma normalisé: `titre, texte, source_site, url, date_publication, langue` + `hash_fingerprint` (SHA256) et dédoublonnage.
-4. Vérifier l’insertion PostgreSQL et un CRUD minimal (SELECT/UPDATE/DELETE).
+4. Vérifier l'insertion PostgreSQL et un CRUD minimal (SELECT/UPDATE/DELETE).
 5. Afficher 1–2 graphiques (documents par source/date/langue).
 
-Variables d’environnement
+Configuration Flexible des Sources
+-----------------------------------
+
+**🎯 Toutes les sources sont configurées dans `config/sources_config.json`**
+
+- **Pour ajouter/modifier une source** : Éditez simplement le JSON selon `config/README_SOURCES.md`, puis implémentez la collecte dans `03_ingest_sources.ipynb`
+- **Structure académique** : Le notebook reste organisé source par source pour la clarté pédagogique
+- **Types de collecteurs** : CSV, API REST, RSS, Web Scraping, GDELT Big Data, PDF
+
+Voir `docs/AUDIT_E1_V3.md` pour l'état complet des sources implémentées.
+
+Variables d'environnement
 -------------------------
 
-- `DATASENS_PG_DSN` (défaut: `postgresql+psycopg2://postgres:postgres@localhost:5432/postgres`)
-- `NEWSAPI_KEY`, `OPENWEATHER_API_KEY`, etc. (facultatives)
-- `MINIO_ENDPOINT`, `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`, `MINIO_BUCKET` (facultatif; fallback local dans `data/raw/`)
+**📄 Template** : Copier `.env.example` vers `.env` et remplir vos valeurs.
 
-Annotation FR (CamemBERT / FlauBERT)
-------------------------------------
+Variables principales :
+- **PostgreSQL** : `POSTGRES_HOST`, `POSTGRES_PORT`, `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASS`
+- **MinIO DataLake** : `MINIO_ENDPOINT`, `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`, `MINIO_BUCKET`
+- **API Keys** (optionnelles) : `OWM_API_KEY`, `NEWSAPI_KEY`, `KAGGLE_USERNAME`, `KAGGLE_KEY`, `REDDIT_CLIENT_ID`, `YOUTUBE_API_KEY`
 
-- Modèles par défaut (priorité FR): CamemBERT puis FlauBERT
-- Nettoyage + détection de langue (priorité FR)
-- Sentiment/polarité: modèles FR en priorité (CamemBERT, FlauBERT). Si indisponible, heuristique simple.
-- NER: spaCy modèle FR (fallback neutre si absent)
-- Mots-clés: YAKE FR (fallback TF-IDF simple)
-- Dédoublonnage SHA256 et QA de base
+**🔒 Sécurité** : Le fichier `.env` est ignoré par Git. Voir [SECURITY.md](SECURITY.md) pour les bonnes pratiques de sécurité.
 
-Export prêt-IA
---------------
+Annotation Simple (E1_v3) - Préparation Dataset pour E2
+--------------------------------------------------------
 
+**E1_v3** : Annotation simple pour préparer le dataset à l'enrichissement IA (E2)
+
+- **Nettoyage** : Normalisation de base (texte, encodage)
+- **Détection de langue** : Identification automatique (priorité FR)
+- **Déduplication** : SHA256 fingerprint pour éviter doublons
+- **QA de base** : Validation format, longueur minimale, champs requis
+
+**E2** (à venir) : Annotation IA avancée avec CamemBERT et FlauBERT
+- Sentiment/polarité (modèles FR)
+- NER (spaCy modèle FR)
+- Mots-clés (YAKE FR)
+
+Classification Types de Données (Médiamétrie)
+---------------------------------------------
+
+Les types de données suivent la classification professionnelle :
+- **Nomenclature** : Données de classification (mensuelle)
+- **Données Maîtres** : Données de référence (quotidienne)
+- **Données Opérationnelles** : Données d'activité (secondes)
+- **Données Décisionnelles** : Données d'analyse (quotidienne)
+- **Métadonnées** : Données sur les données (variable)
+
+Export Dataset Préparé (E1_v3)
+-------------------------------
+
+- **E1_v3** : Dataset nettoyé et annoté simplement, prêt pour enrichissement IA (E2)
 - Parquet partitionné (date/langue/source), ex:
   - `data/gold/annotated/date=YYYY-MM-DD/langue=fr/source=reddit/part.parquet`
+- **E2** : Enrichissement IA avec CamemBERT et FlauBERT sur le dataset E1_v3
 
 Tolérance aux manques (démo)
 ----------------------------

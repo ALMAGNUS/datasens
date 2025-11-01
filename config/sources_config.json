@@ -1,0 +1,391 @@
+{
+  "version": "1.0",
+  "description": "Configuration flexible de toutes les sources DataSens",
+  "last_updated": "2025-01-30",
+  "sources": [
+    {
+      "id": "source_001",
+      "nom": "Kaggle CSV Dataset",
+      "type_source": "Données Maîtres",
+      "categorie": "Fichier plat",
+      "format": "csv",
+      "url": "https://www.kaggle.com/",
+      "url_data": "",
+      "description": "Fichiers plats CSV/Parquet/JSON depuis Kaggle",
+      "themes": ["Données brutes"],
+      "tables_target": ["t04_document"],
+      "frequence_collecte": "hebdomadaire",
+      "actif": true,
+      "priorite": "haute",
+      "api_key_required": false,
+      "collector": "csv_file",
+      "params": {
+        "separator": ",",
+        "encoding": "utf-8",
+        "split_pg_minio": true,
+        "pg_percentage": 50
+      }
+    },
+    {
+      "id": "source_002",
+      "nom": "OpenWeatherMap API",
+      "type_source": "Données Opérationnelles",
+      "categorie": "API météo",
+      "format": "api",
+      "url": "https://openweathermap.org/api",
+      "url_data": "",
+      "description": "Données météo en temps réel pour villes françaises",
+      "themes": ["Météo", "Géographie"],
+      "tables_target": ["t19_meteo", "t17_territoire"],
+      "frequence_collecte": "quotidienne",
+      "actif": true,
+      "priorite": "haute",
+      "api_key_required": true,
+      "api_key_env": "OWM_API_KEY",
+      "collector": "api_rest",
+      "params": {
+        "endpoint": "https://api.openweathermap.org/data/2.5/weather",
+        "method": "GET",
+        "cities": ["Paris,FR", "Lyon,FR", "Marseille,FR", "Lille,FR"],
+        "units": "metric",
+        "lang": "fr"
+      }
+    },
+    {
+      "id": "source_003",
+      "nom": "Flux RSS Multi-Sources",
+      "type_source": "Données Opérationnelles",
+      "categorie": "RSS presse",
+      "format": "rss",
+      "url": "https://www.francetvinfo.fr/titres.rss",
+      "url_data": "",
+      "description": "Articles d'actualité depuis Franceinfo, 20 Minutes, Le Monde",
+      "themes": ["Actualité", "Presse"],
+      "tables_target": ["t04_document"],
+      "frequence_collecte": "quotidienne",
+      "actif": true,
+      "priorite": "haute",
+      "api_key_required": false,
+      "collector": "rss_feed",
+      "params": {
+        "feeds": [
+          {"name": "Franceinfo", "url": "https://www.francetvinfo.fr/titres.rss"},
+          {"name": "20 Minutes", "url": "https://www.20minutes.fr/feeds/rss-une.xml"},
+          {"name": "Le Monde", "url": "https://www.lemonde.fr/rss/une.xml"}
+        ],
+        "max_items_per_feed": 100
+      }
+    },
+    {
+      "id": "source_004",
+      "nom": "NewsAPI",
+      "type_source": "Données Opérationnelles",
+      "categorie": "API news",
+      "format": "api",
+      "url": "https://newsapi.org/",
+      "url_data": "",
+      "description": "API d'actualités (optionnel, nécessite clé API payante)",
+      "themes": ["Actualité"],
+      "tables_target": ["t04_document"],
+      "frequence_collecte": "quotidienne",
+      "actif": false,
+      "priorite": "faible",
+      "api_key_required": true,
+      "api_key_env": "NEWSAPI_KEY",
+      "collector": "api_rest",
+      "params": {
+        "endpoint": "https://newsapi.org/v2/top-headlines",
+        "method": "GET",
+        "country": "fr"
+      }
+    },
+    {
+      "id": "source_005",
+      "nom": "Web Scraping Multi-Sources",
+      "type_source": "Données Opérationnelles",
+      "categorie": "Web scraping",
+      "format": "web_scraping",
+      "url": "https://www.data.gouv.fr/",
+      "url_data": "",
+      "description": "Scraping éthique : Vie-publique.fr, data.gouv.fr, Reddit, YouTube",
+      "themes": ["Citoyen", "Open Data"],
+      "tables_target": ["t04_document"],
+      "frequence_collecte": "hebdomadaire",
+      "actif": true,
+      "priorite": "moyenne",
+      "api_key_required": false,
+      "collector": "web_scraping",
+      "params": {
+        "sources": [
+          {"name": "Vie-publique.fr", "type": "rss", "url": "https://www.vie-publique.fr/rss"},
+          {"name": "data.gouv.fr", "type": "api", "url": "https://www.data.gouv.fr/api/1/datasets/"},
+          {"name": "Reddit", "type": "api", "url": "https://www.reddit.com/r/france.json"},
+          {"name": "YouTube", "type": "api", "url": "https://www.googleapis.com/youtube/v3/search"}
+        ]
+      }
+    },
+    {
+      "id": "source_006",
+      "nom": "GDELT GKG Big Data",
+      "type_source": "Données Décisionnelles",
+      "categorie": "Big Data",
+      "format": "csv",
+      "url": "http://data.gdeltproject.org/gdeltv2/",
+      "url_data": "",
+      "description": "Flux massifs GDELT Global Knowledge Graph (focus France)",
+      "themes": ["Événements", "Big Data"],
+      "tables_target": ["t25_evenement", "t27_document_evenement", "t04_document"],
+      "frequence_collecte": "quotidienne",
+      "actif": true,
+      "priorite": "moyenne",
+      "api_key_required": false,
+      "collector": "gdelt_big_data",
+      "params": {
+        "filter_country": "FR",
+        "max_rows": 5000
+      }
+    },
+    {
+      "id": "baro_001",
+      "nom": "CEVIPOF - Baromètre de confiance politique",
+      "type_source": "Données Maîtres",
+      "categorie": "Baromètre politique",
+      "format": "csv",
+      "url": "https://www.cevipof.com/fr/le-barometre-de-la-confiance-politique",
+      "url_data": "",
+      "description": "Enquêtes annuelles sur la confiance dans les institutions",
+      "themes": ["Politique", "Gouvernance", "Démocratie"],
+      "tables_target": ["t22_indicateur", "t04_document", "t24_theme"],
+      "frequence_collecte": "annuelle",
+      "actif": true,
+      "priorite": "moyenne",
+      "api_key_required": false,
+      "collector": "csv_file",
+      "params": {
+        "separator": ",",
+        "encoding": "utf-8"
+      }
+    },
+    {
+      "id": "baro_002",
+      "nom": "Kantar Public - Mood of France",
+      "type_source": "Données Opérationnelles",
+      "categorie": "Baromètre émotions",
+      "format": "csv",
+      "url": "https://www.kantar.com/fr/public-sector/social-data-analysis",
+      "url_data": "",
+      "description": "Enquêtes mensuelles sur les émotions et le moral des Français",
+      "themes": ["Émotions", "Moral", "Société"],
+      "tables_target": ["t08_emotion", "t22_indicateur", "t04_document"],
+      "frequence_collecte": "mensuelle",
+      "actif": true,
+      "priorite": "haute",
+      "api_key_required": false,
+      "collector": "csv_file",
+      "params": {
+        "separator": ",",
+        "encoding": "utf-8"
+      }
+    },
+    {
+      "id": "baro_003",
+      "nom": "ADEME - Baromètre environnemental",
+      "type_source": "Données Décisionnelles",
+      "categorie": "Baromètre environnement",
+      "format": "api",
+      "url": "https://www.ademe.fr/expertises/changements-climatiques-energie/consommation/impacts-consommation",
+      "url_data": "",
+      "description": "Enquêtes sur les pratiques écologiques et la transition énergétique",
+      "themes": ["Environnement", "Climat", "Écologie"],
+      "tables_target": ["t22_indicateur", "t24_theme"],
+      "frequence_collecte": "trimestrielle",
+      "actif": true,
+      "priorite": "moyenne",
+      "api_key_required": false,
+      "collector": "api_rest",
+      "params": {
+        "endpoint": "",
+        "method": "GET"
+      }
+    },
+    {
+      "id": "baro_004",
+      "nom": "INSEE - Baromètre économique et social",
+      "type_source": "Données Maîtres",
+      "categorie": "Baromètre économique",
+      "format": "csv",
+      "url": "https://www.insee.fr/fr/statistiques",
+      "url_data": "",
+      "description": "Conjoncture économique : pouvoir d'achat, chômage, inflation, emploi",
+      "themes": ["Économie", "Social", "Emploi"],
+      "tables_target": ["t22_indicateur", "t17_territoire"],
+      "frequence_collecte": "mensuelle",
+      "actif": true,
+      "priorite": "haute",
+      "api_key_required": false,
+      "collector": "csv_file",
+      "params": {
+        "separator": ";",
+        "encoding": "utf-8"
+      }
+    },
+    {
+      "id": "baro_005",
+      "nom": "La Croix - Baromètre Kantar médias",
+      "type_source": "Données Opérationnelles",
+      "categorie": "Baromètre médias",
+      "format": "web_scraping",
+      "url": "https://www.la-croix.com/",
+      "url_data": "",
+      "description": "Rapports annuels sur la confiance dans les médias et perception des fake news",
+      "themes": ["Médias", "Information", "Confiance"],
+      "tables_target": ["t04_document", "t22_indicateur"],
+      "frequence_collecte": "annuelle",
+      "actif": true,
+      "priorite": "moyenne",
+      "api_key_required": false,
+      "collector": "web_scraping",
+      "params": {
+        "selectors": {
+          "title": "h1",
+          "content": ".article-content",
+          "date": ".article-date"
+        }
+      }
+    },
+    {
+      "id": "baro_006",
+      "nom": "Ministère des Sports - Baromètre sport et cohésion",
+      "type_source": "Données Maîtres",
+      "categorie": "Baromètre sport",
+      "format": "csv",
+      "url": "https://www.sports.gouv.fr/",
+      "url_data": "",
+      "description": "Statistiques de pratique sportive et impact des JO sur la cohésion nationale",
+      "themes": ["Sport", "Cohésion", "Bien-être"],
+      "tables_target": ["t22_indicateur", "t25_evenement"],
+      "frequence_collecte": "semestrielle",
+      "actif": true,
+      "priorite": "faible",
+      "api_key_required": false,
+      "collector": "csv_file",
+      "params": {
+        "separator": ",",
+        "encoding": "utf-8"
+      }
+    },
+    {
+      "id": "baro_007",
+      "nom": "Défenseur des Droits - Baromètre discriminations",
+      "type_source": "Données Maîtres",
+      "categorie": "Baromètre égalité",
+      "format": "csv",
+      "url": "https://www.defenseurdesdroits.fr/",
+      "url_data": "",
+      "description": "Rapports annuels sur les discriminations et l'égalité",
+      "themes": ["Inclusion", "Diversité", "Égalité"],
+      "tables_target": ["t22_indicateur", "t04_document"],
+      "frequence_collecte": "annuelle",
+      "actif": true,
+      "priorite": "moyenne",
+      "api_key_required": false,
+      "collector": "csv_file",
+      "params": {
+        "separator": ",",
+        "encoding": "utf-8"
+      }
+    },
+    {
+      "id": "baro_008",
+      "nom": "Santé Publique France - CoviPrev",
+      "type_source": "Données Décisionnelles",
+      "categorie": "Baromètre santé",
+      "format": "csv",
+      "url": "https://www.santepubliquefrance.fr/etudes-et-enquetes/coviprev",
+      "url_data": "",
+      "description": "Enquêtes CoviPrev : stress, anxiété, santé mentale post-COVID",
+      "themes": ["Santé", "Bien-être", "Santé mentale"],
+      "tables_target": ["t22_indicateur", "t24_theme"],
+      "frequence_collecte": "mensuelle",
+      "actif": true,
+      "priorite": "haute",
+      "api_key_required": false,
+      "collector": "csv_file",
+      "params": {
+        "separator": ";",
+        "encoding": "utf-8"
+      }
+    },
+    {
+      "id": "baro_009",
+      "nom": "Elabe / BFMTV Opinion - Climat social",
+      "type_source": "Données Opérationnelles",
+      "categorie": "Baromètre social",
+      "format": "web_scraping",
+      "url": "https://www.bfmtv.com/politique/",
+      "url_data": "",
+      "description": "Sondages d'opinion sur le climat social, colère, frustration, confiance",
+      "themes": ["Tensions", "Colère", "Confiance"],
+      "tables_target": ["t04_document", "t22_indicateur"],
+      "frequence_collecte": "hebdomadaire",
+      "actif": true,
+      "priorite": "moyenne",
+      "api_key_required": false,
+      "collector": "web_scraping",
+      "params": {
+        "selectors": {
+          "title": ".article-title",
+          "content": ".article-body",
+          "date": ".article-meta-date"
+        }
+      }
+    },
+    {
+      "id": "baro_010",
+      "nom": "CNIL / France IA - Baromètre innovation IA",
+      "type_source": "Données Décisionnelles",
+      "categorie": "Baromètre innovation",
+      "format": "pdf",
+      "url": "https://www.cnil.fr/",
+      "url_data": "",
+      "description": "Rapports sur l'adoption de l'IA et la confiance numérique",
+      "themes": ["Innovation", "IA", "Numérique"],
+      "tables_target": ["t04_document", "t22_indicateur"],
+      "frequence_collecte": "annuelle",
+      "actif": true,
+      "priorite": "faible",
+      "api_key_required": false,
+      "collector": "pdf_parser",
+      "params": {
+        "extract_text": true,
+        "extract_tables": true
+      }
+    }
+  ],
+  "collectors": {
+    "csv_file": {
+      "description": "Collecte depuis fichier CSV local ou distant",
+      "required_params": ["separator", "encoding"]
+    },
+    "api_rest": {
+      "description": "Collecte depuis API REST",
+      "required_params": ["endpoint", "method"]
+    },
+    "rss_feed": {
+      "description": "Collecte depuis flux RSS",
+      "required_params": ["feeds"]
+    },
+    "web_scraping": {
+      "description": "Collecte via web scraping avec sélecteurs CSS",
+      "required_params": ["selectors"]
+    },
+    "gdelt_big_data": {
+      "description": "Collecte GDELT Big Data",
+      "required_params": ["filter_country"]
+    },
+    "pdf_parser": {
+      "description": "Extraction de données depuis PDF",
+      "required_params": ["extract_text", "extract_tables"]
+    }
+  }
+}

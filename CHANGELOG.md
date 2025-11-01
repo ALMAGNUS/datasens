@@ -6,17 +6,26 @@ The format is based on Keep a Changelog, and this project adheres to Semantic Ve
 
 ## [Unreleased]
 ### Added
-- Dockerfile and docker-compose with Postgres and MinIO.
-- One-file notebook auditor/fixer `datasens_audit.py` (+ viz, annotation, Parquet export).
-- Extended technical guide with glossary, KPIs, troubleshooting, roadmap.
-- Demo runbook and enriched README (quick links, release workflow, security notes).
+- **E1_v3 Pipeline Complet** : Architecture 36/37 tables avec toutes les sources réelles (Kaggle, OpenWeatherMap, RSS, NewsAPI, Web Scraping, GDELT)
+- **Classification professionnelle types de données** : Standards Médiamétrie (Nomenclature, Données Maîtres, Opérationnelles, Décisionnelles, Métadonnées)
+- **Configuration flexible des sources** : `config/sources_config.json` pour gérer toutes les sources sans modifier le code
+- **Export Dataset IA** : Export Parquet/CSV structuré dans `data/gold/dataset_ia/` prêt pour enrichissement E2
+- **Visualisations complètes** : Pandas DataFrames + Matplotlib à chaque étape (MinIO, PostgreSQL, CRUD, QA)
+- **Dockerfile and docker-compose** : Stack complet Jupyter + PostgreSQL + MinIO
+- **LICENSE** : MIT License ajoutée
+- **.env.example** : Template complet avec toutes les variables d'environnement
+- **Extended technical guide** : Guide technique complet avec glossaire, KPIs, troubleshooting, roadmap
 
 ### Changed
-- README aligned with technical reference; added ML-ready export section.
-- README and guide clarified: E2 annotation defaults to CamemBERT puis FlauBERT (FR priority models).
+- **requirements.txt** : Complété avec toutes les dépendances (feedparser, beautifulsoup4, praw, google-api-python-client, tenacity, tqdm, pyarrow, matplotlib)
+- **README** : Vision complète du projet (bouffeur de données + classifieur professionnel), référence corrigée
+- **.gitignore** : Amélioré (datasens.db, *.db, versions/), .env.example n'est plus ignoré
+- **CI/CD** : Workflow corrigé (référence datasens_audit.py supprimée)
+- **README and guide clarified** : E1_v3 = annotation simple (préparation dataset), E2 = annotation IA avancée (CamemBERT, FlauBERT)
 
 ### Fixed
-- Notebook sanitization for invalid surrogate characters.
+- Notebook sanitization for invalid surrogate characters
+- Référence obsolète dans README (GUIDE_TECHNIQUE_JURY.md → GUIDE_TECHNIQUE_E1.md)
 
 ## [0.1.0] - 2025-10-30
 ### Added

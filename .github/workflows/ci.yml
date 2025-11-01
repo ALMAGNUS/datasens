@@ -29,10 +29,6 @@ jobs:
           ruff --version
           ruff . || true
 
-      - name: Dry run auditor
-        run: |
-          python datasens_audit.py --report || true
-
       - name: Build Docker image (smoke)
         uses: docker/build-push-action@v6
         with:
