@@ -1,5 +1,6 @@
 .git
 .gitignore
+.github
 __pycache__
 *.pyc
 *.pyo
@@ -13,10 +14,20 @@ dist
 build
 logs/*
 !logs/.gitkeep
+reports/*
+!reports/.gitkeep
 data/tmp/*
 data/raw/*
 data/silver/*
 data/gold/*
 !data/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+.env
+.env.*
+!.env.example
+docs/*.md.bak
+scripts/*.pyc
 
 
