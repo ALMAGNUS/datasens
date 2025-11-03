@@ -26,10 +26,12 @@ datasens.db
 versions/
 
 # Logs
-logs/*.txt
-logs/*.log
-logs/*.json
+logs/
 !logs/.gitkeep
+
+# Reports
+reports/
+!reports/.gitkeep
 
 # OS
 .DS_Store

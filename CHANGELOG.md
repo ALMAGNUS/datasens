@@ -2,6 +2,60 @@
 
 All notable changes to this project will be documented in this file.
 
+The format is based on Keep a Changelog, and this project adheres to Semantic Versioning (SemVer).
+
+## [Unreleased]
+### Added
+- (À compléter) Nouvelles sources, notebooks ou scripts.
+
+### Changed
+- (À compléter)
+
+### Fixed
+- (À compléter)
+
+### Security
+- (À compléter)
+
+## [3.1.0] - 2025-11-10
+### Added
+- (exemple) Nouvelle visualisation X dans `03_ingest_sources.ipynb` (v1/v2/v3).
+
+### Changed
+- (exemple) Ajustement des performances chargement CSV.
+
+### Fixed
+- (exemple) Correction d'un chemin relatif d'export.
+
+### Security
+- (exemple) Durcissement validation des identifiants colonnes.
+
+## [3.0.0] - 2025-11-03
+### Added
+- Visual storytelling complet (v1/v2/v3): dashboard narratif, timeline, sections avant/après collecte.
+- Script de vérification robuste `scripts/verify_project_complete.py` (rapport possible dans `reports/`).
+- Export datasets Parquet/CSV final dans les notebooks `05_snapshot_and_readme.ipynb` (v1/v2/v3).
+
+### Changed
+- Sécurité consolidée (v2/v3): `assert_valid_identifier()`, `load_whitelist_tables()`, requêtes SQL paramétrées.
+- Documentation mise à jour: `SECURITY.md`, `CONTRIBUTING.md`, `README.md`, `docs/GUIDE_TECHNIQUE_E1.md` (détail des visualisations).
+- Arborescences v1/v2/v3 alignées et nettoyées.
+
+### Fixed
+- Suppression des cellules storytelling dupliquées dans `notebooks/datasens_E1_v3/03_ingest_sources.ipynb`.
+- Corrections d'encodage dans les scripts (Windows `cp1252` → UTF-8, suppression d’emojis dans la console).
+
+### Security
+- Gestion des secrets via `.env` + `os.getenv()` et `.gitignore`.
+- Renforcement CI/CD Docker GHCR (authentification et taggage versionné).
+
+[Unreleased]: https://github.com/<owner>/<repo>/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/<owner>/<repo>/releases/tag/v3.0.0
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
 ## [Unreleased]
