@@ -78,6 +78,14 @@ Chaque donnée est **classifiée dès l'entrée** du pipeline selon 5 catégorie
 
 Cette classification est **automatiquement appliquée** dès l'insertion dans `t02_source` via `t01_type_donnee`.
 
+### 🔐 Sécurité opérationnelle (E1_v3)
+
+- **Détection stricte de la racine** (`.git` > `docker-compose.yml` > `docs+notebooks`) dans `01_setup_env.ipynb`.
+- **Secrets** : `.env` réside uniquement à la racine. Les notebooks refusent désormais de générer un `.env` local ; ils rappellent de copier `.env.example`.
+- **Trace** : chaque run génère `logs/collecte_<timestamp>.log` + manifest JSON.
+- **Docker Compose** : `postgres`, `minio`, `minio-mc`, `app`. Lancement unique : `docker compose up -d`.
+- **CI GitHub** : workflow `collect-data.yml` exécute quotidiennement la collecte via Papermill + conversion HTML.
+
 ### 🤖 Annotation : Simple (E1_v3) → IA Avancée (E2)
 
 **E1_v3 (Actuel)** : Annotation simple pour préparer le dataset

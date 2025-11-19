@@ -104,6 +104,13 @@ Utiliser des tags pour les jalons:
 Démarrage rapide (Docker - recommandé)
 ---------------------------------------
 
+**Prérequis sécurité (à faire une seule fois) :**
+
+```bash
+cp .env.example .env  # le fichier doit rester à la racine du dépôt
+# Renseigner les secrets (PostgreSQL, MinIO, API). Ne jamais copier .env dans notebooks/
+```
+
 **Pour le jury / démonstration (2 minutes):**
 
 ```bash
@@ -163,10 +170,13 @@ Configuration Flexible des Sources
 
 Voir `docs/AUDIT_E1_V3.md` pour l'état complet des sources implémentées.
 
-Variables d'environnement
--------------------------
+Variables d'environnement (sécurité renforcée)
+----------------------------------------------
 
-**📄 Template** : Copier `.env.example` vers `.env` et remplir vos valeurs.
+**📄 Template officiel** : `cp .env.example .env` (existe seulement à la racine).
+- Le notebook `01_setup_env.ipynb` détecte désormais **strictement** la racine Git avant de charger les secrets.
+- Si `.env` est absent, un rappel explique comment régénérer le template et renseigner les clefs.
+- **Interdit** : aucun `.env` ne doit être stocké dans `notebooks/` ou sous-dossiers.
 
 Variables principales :
 - **PostgreSQL** : `POSTGRES_HOST`, `POSTGRES_PORT`, `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASS`
@@ -175,6 +185,7 @@ Variables principales :
 
 **🔒 Sécurité** : 
 - Le fichier `.env` est ignoré par Git
+- Les notebooks refusent de créer un `.env` hors racine (message explicite dans `01_setup_env.ipynb`)
 - Requêtes SQL paramétrées pour prévenir injection SQL
 - Fonctions de validation implémentées (`assert_valid_identifier`, `load_whitelist_tables`)
 - Voir [SECURITY.md](SECURITY.md) pour les détails complets
@@ -248,5 +259,17 @@ Image GHCR (publication auto sur tag)
 - Pull `latest`: `docker pull ghcr.io/almagnus/datasens:latest`
 - Pull version: `docker pull ghcr.io/almagnus/datasens:${TAG}` (ex: `v0.2.0`)
 - Run via compose: `IMAGE=ghcr.io/almagnus/datasens:latest docker compose up -d`
+
+Automatisation quotidienne
+--------------------------
+
+- Workflow GitHub Actions `DataSens - Collecte Quotidienne Automatisée` (`.github/workflows/collect-data.yml`)
+  - Provisionne Postgres + MinIO via `docker compose`
+  - Exécute `02_schema_create.ipynb` puis `03_ingest_sources.ipynb` avec Papermill
+  - Convertit le notebook exécuté en rapport HTML
+  - Archive notebooks exécutés, datasets et logs comme artefacts d'exécution
+  - Cron à 05h15 UTC + déclenchement manuel `workflow_dispatch`
+
+Les journaux GitHub contiennent le détail d’initialisation des conteneurs et les statistiques finales (`artifacts/collection_stats.json`).
 
 
