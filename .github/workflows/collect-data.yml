@@ -1,0 +1,137 @@
+name: DataSens - Collecte Quotidienne Automatisée
+
+on:
+  schedule:
+    # Tous les matins à 06h15 (heure de Paris ~ 05h15 UTC)
+    - cron: '15 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  collect-data:
+    runs-on: ubuntu-latest
+
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PIP_CACHE_DIR: ~/.cache/pip
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      MINIO_ENDPOINT: http://127.0.0.1:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET: datasens-raw
+      EXECUTED_NOTEBOOK: artifacts/notebooks/03_ingest_sources_executed.ipynb
+      HTML_REPORT: artifacts/notebooks/03_ingest_sources_report.html
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install jupyter papermill
+
+      - name: Initialize containers (Docker Compose)
+        run: |
+          docker compose up -d postgres minio minio-mc
+          echo "Waiting for PostgreSQL to be ready..."
+          for i in {1..30}; do
+            if docker compose exec -T postgres pg_isready -U $POSTGRES_USER > /dev/null 2>&1; then
+              echo "PostgreSQL is ready."
+              break
+            fi
+            sleep 2
+          done
+          docker compose ps
+
+      - name: Initialize database schema
+        run: |
+          mkdir -p artifacts/notebooks
+          papermill notebooks/datasens_E1_v3/02_schema_create.ipynb artifacts/notebooks/02_schema_create_executed.ipynb
+
+      - name: Run daily collection notebook
+        run: |
+          papermill notebooks/datasens_E1_v3/03_ingest_sources.ipynb "$EXECUTED_NOTEBOOK"
+
+      - name: Convert notebook to HTML report
+        run: |
+          html_dir="$(dirname "$HTML_REPORT")"
+          mkdir -p "$html_dir"
+          jupyter nbconvert --to html "$EXECUTED_NOTEBOOK" --output "$(basename "$HTML_REPORT")" --output-dir "$html_dir"
+
+      - name: Upload collection artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: datasens-collect-${{ github.run_id }}
+          if-no-files-found: warn
+          path: |
+            ${{ env.EXECUTED_NOTEBOOK }}
+            ${{ env.HTML_REPORT }}
+            data/dataset/
+            logs/
+
+      - name: Extract collection stats
+        run: |
+          python - <<'PY'
+          import json
+          import pathlib
+          import pandas as pd
+
+          dataset_dir = pathlib.Path("data") / "dataset"
+          latest = max(dataset_dir.glob("datasens_gold_*.parquet"), default=None)
+          stats = {}
+          if latest:
+            df = pd.read_parquet(latest)
+            stats = {
+              "latest_file": latest.name,
+              "rows": len(df),
+              "sources": int(df.get("source_id", pd.Series(dtype=int)).nunique()) if "source_id" in df.columns else 0,
+              "territoires": int(df.get("territoire_region", pd.Series(dtype=str)).nunique()) if "territoire_region" in df.columns else 0,
+            }
+          print(json.dumps(stats, indent=2, ensure_ascii=False))
+          pathlib.Path("artifacts").mkdir(parents=True, exist_ok=True)
+          (pathlib.Path("artifacts") / "collection_stats.json").write_text(json.dumps(stats, indent=2, ensure_ascii=False), encoding="utf-8")
+          PY
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::La collecte quotidienne a échoué. Consulter les logs et relancer le workflow."
+
+      - name: Success summary
+        if: success()
+        run: |
+          echo "Collecte quotidienne terminée avec succès ✅"
+
+      - name: Stop containers
+        if: always()
+        run: docker compose down -v
+
+      - name: Upload stats artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: datasens-collect-stats-${{ github.run_id }}
+          if-no-files-found: warn
+          path: artifacts/collection_stats.json
+
