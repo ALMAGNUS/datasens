@@ -26,6 +26,7 @@ pydantic
 faker
 pyyaml
 rich
+sqlparse
 
 # Visualization
 matplotlib
@@ -35,6 +36,10 @@ openpyxl
 # Infrastructure
 minio
 prefect
+
+# NLP & Annotation (E2/E3)
+spacy
+yake
 
 # Development
 ruff

@@ -1,0 +1,597 @@
+{
+  "dataset": "datasens_gold_20251118T222736Z_ai_ready_20251118T235819Z.parquet",
+  "nb_samples": 10,
+  "timestamp": "2025-11-19T01:12:09.950145",
+  "samples": [
+    {
+      "id": 0,
+      "text_length": 33,
+      "text_preview": "Température: 5.18°C, légère pluie",
+      "spacy": {
+        "time_ms": 12.66,
+        "entities": [
+          {
+            "text": "Température",
+            "label": "PER",
+            "start": 0,
+            "end": 11
+          }
+        ],
+        "nb_entities": 1,
+        "nb_tokens": 8
+      },
+      "yake": {
+        "time_ms": 2.0,
+        "keywords": [
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.04491197687864554",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.15831692877998726",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.15831692877998726",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 4
+      }
+    },
+    {
+      "id": 1,
+      "text_length": 32,
+      "text_preview": "Température: 6.86°C, ciel dégagé",
+      "spacy": {
+        "time_ms": 6.0,
+        "entities": [
+          {
+            "text": "Température",
+            "label": "PER",
+            "start": 0,
+            "end": 11
+          }
+        ],
+        "nb_entities": 1,
+        "nb_tokens": 8
+      },
+      "yake": {
+        "time_ms": 2.0,
+        "keywords": [
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.04491197687864554",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.15831692877998726",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.15831692877998726",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 4
+      }
+    },
+    {
+      "id": 2,
+      "text_length": 33,
+      "text_preview": "Température: -2.65°C, ciel dégagé",
+      "spacy": {
+        "time_ms": 8.52,
+        "entities": [
+          {
+            "text": "Température",
+            "label": "PER",
+            "start": 0,
+            "end": 11
+          }
+        ],
+        "nb_entities": 1,
+        "nb_tokens": 8
+      },
+      "yake": {
+        "time_ms": 1.0,
+        "keywords": [
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.04491197687864554",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.15831692877998726",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.15831692877998726",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 4
+      }
+    },
+    {
+      "id": 3,
+      "text_length": 28,
+      "text_preview": "Température: 6.27°C, couvert",
+      "spacy": {
+        "time_ms": 68.47,
+        "entities": [
+          {
+            "text": "Température",
+            "label": "PER",
+            "start": 0,
+            "end": 11
+          }
+        ],
+        "nb_entities": 1,
+        "nb_tokens": 7
+      },
+      "yake": {
+        "time_ms": 1.0,
+        "keywords": [
+          {
+            "keyword": "0.04491197687864554",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.04491197687864554",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 2
+      }
+    },
+    {
+      "id": 4,
+      "text_length": 88,
+      "text_preview": "De son côté, l'armée israélienne a affirmé avoir frappé un camp d'entraînement du Hamas.",
+      "spacy": {
+        "time_ms": 12.0,
+        "entities": [
+          {
+            "text": "Hamas",
+            "label": "ORG",
+            "start": 82,
+            "end": 87
+          }
+        ],
+        "nb_entities": 1,
+        "nb_tokens": 18
+      },
+      "yake": {
+        "time_ms": 14.62,
+        "keywords": [
+          {
+            "keyword": "0.026233073037508336",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.04940384002065631",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.08596317751626563",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.09700399286574239",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.09700399286574239",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.09700399286574239",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.09700399286574239",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.15831692877998726",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.15831692877998726",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.29736558256021506",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 10
+      }
+    },
+    {
+      "id": 5,
+      "text_length": 207,
+      "text_preview": "Chroniqueur pour LCI, RMC et le magazine conservateur Valeurs actuelles, le fils de l'ancien préside...",
+      "spacy": {
+        "time_ms": 22.0,
+        "entities": [
+          {
+            "text": "LCI",
+            "label": "ORG",
+            "start": 17,
+            "end": 20
+          },
+          {
+            "text": "RMC",
+            "label": "ORG",
+            "start": 22,
+            "end": 25
+          },
+          {
+            "text": "Valeurs actuelles",
+            "label": "ORG",
+            "start": 54,
+            "end": 71
+          },
+          {
+            "text": "président de la République",
+            "label": "PER",
+            "start": 93,
+            "end": 119
+          }
+        ],
+        "nb_entities": 4,
+        "nb_tokens": 36
+      },
+      "yake": {
+        "time_ms": 185.09,
+        "keywords": [
+          {
+            "keyword": "0.0006052376660884209",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.0009123104856698896",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.0009123104856698896",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.0016012214736657916",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.0036984844327355177",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.005157590407455398",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.007743432063478832",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.007743432063478832",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.00899321792126428",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.013527995261974615",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 10
+      }
+    },
+    {
+      "id": 6,
+      "text_length": 177,
+      "text_preview": "Après avoir mené pendant des mois une campagne pour contrecarrer la tenue de ce vote à la Chambre, l...",
+      "spacy": {
+        "time_ms": 17.01,
+        "entities": [
+          {
+            "text": "Chambre",
+            "label": "ORG",
+            "start": 90,
+            "end": 97
+          }
+        ],
+        "nb_entities": 1,
+        "nb_tokens": 31
+      },
+      "yake": {
+        "time_ms": 21.58,
+        "keywords": [
+          {
+            "keyword": "0.015380821171891606",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.057012387690331526",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.09568045026443411",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 10
+      }
+    },
+    {
+      "id": 7,
+      "text_length": 214,
+      "text_preview": "L’artiste est accusé avec trois autres personnes d’avoir séquestré, violenté et humilié un jeune adm...",
+      "spacy": {
+        "time_ms": 20.0,
+        "entities": [
+          {
+            "text": "Pin",
+            "label": "LOC",
+            "start": 176,
+            "end": 179
+          },
+          {
+            "text": "Seine-et-Marne",
+            "label": "LOC",
+            "start": 184,
+            "end": 198
+          }
+        ],
+        "nb_entities": 2,
+        "nb_tokens": 40
+      },
+      "yake": {
+        "time_ms": 20.0,
+        "keywords": [
+          {
+            "keyword": "0.009108237309423345",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.015380821171891606",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.015380821171891606",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.015380821171891606",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.02570861714399338",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.04491197687864554",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 10
+      }
+    },
+    {
+      "id": 8,
+      "text_length": 176,
+      "text_preview": "Cette réévaluation vise à mieux prendre en compte certains critères dits \"de confort\", tels que la p...",
+      "spacy": {
+        "time_ms": 25.3,
+        "entities": [
+          {
+            "text": "WC",
+            "label": "LOC",
+            "start": 142,
+            "end": 144
+          }
+        ],
+        "nb_entities": 1,
+        "nb_tokens": 36
+      },
+      "yake": {
+        "time_ms": 18.59,
+        "keywords": [
+          {
+            "keyword": "0.0010606143890052174",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.00899321792126428",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.00899321792126428",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.013527995261974615",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.013527995261974615",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.013527995261974615",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.013527995261974615",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.013527995261974615",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.013527995261974615",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.04491197687864554",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 10
+      }
+    },
+    {
+      "id": 9,
+      "text_length": 180,
+      "text_preview": "La rupture entre Trump et Marjorie Taylor Greene révèle une fracture inédite au sein du mouvement MA...",
+      "spacy": {
+        "time_ms": 28.01,
+        "entities": [
+          {
+            "text": "Trump",
+            "label": "PER",
+            "start": 17,
+            "end": 22
+          },
+          {
+            "text": "Marjorie Taylor Greene",
+            "label": "PER",
+            "start": 26,
+            "end": 48
+          },
+          {
+            "text": "d’affaire",
+            "label": "MISC",
+            "start": 113,
+            "end": 122
+          },
+          {
+            "text": "Epstein",
+            "label": "PER",
+            "start": 123,
+            "end": 130
+          }
+        ],
+        "nb_entities": 4,
+        "nb_tokens": 32
+      },
+      "yake": {
+        "time_ms": 21.99,
+        "keywords": [
+          {
+            "keyword": "0.0006487982591412822",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.0012089197967110022",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.001488913964133022",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.007444681613352736",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.007444681613352736",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.007444681613352736",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.009108237309423345",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.009108237309423345",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.013797198203993007",
+            "score": 0.0
+          },
+          {
+            "keyword": "0.013797198203993007",
+            "score": 0.0
+          }
+        ],
+        "nb_keywords": 10
+      }
+    }
+  ],
+  "metrics": {
+    "spacy": {
+      "avg_time_ms": 22.0,
+      "total_entities": 17,
+      "avg_entities_per_sample": 1.7
+    },
+    "yake": {
+      "avg_time_ms": 28.79,
+      "total_keywords": 74,
+      "avg_keywords_per_sample": 7.4
+    }
+  }
+}
