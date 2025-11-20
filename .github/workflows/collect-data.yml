@@ -27,6 +27,10 @@ jobs:
       MINIO_BUCKET: datasens-raw
       EXECUTED_NOTEBOOK: artifacts/notebooks/03_ingest_sources_executed.ipynb
       HTML_REPORT: artifacts/notebooks/03_ingest_sources_report.html
+      # API Keys (from GitHub Secrets)
+      OWM_API_KEY: ${{ secrets.OWM_API_KEY }}
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
 
     steps:
       - name: Checkout code
@@ -50,24 +54,38 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install jupyter papermill
+          python -m spacy download fr_core_news_md
 
       - name: Initialize containers (Docker Compose)
         run: |
           docker compose up -d postgres minio minio-mc
           echo "Waiting for PostgreSQL to be ready..."
-          for i in {1..30}; do
+          for i in {1..60}; do
             if docker compose exec -T postgres pg_isready -U $POSTGRES_USER > /dev/null 2>&1; then
               echo "PostgreSQL is ready."
               break
             fi
             sleep 2
           done
+          echo "Waiting for MinIO to be ready..."
+          sleep 10
           docker compose ps
 
       - name: Initialize database schema
         run: |
           mkdir -p artifacts/notebooks
           papermill notebooks/datasens_E1_v3/02_schema_create.ipynb artifacts/notebooks/02_schema_create_executed.ipynb
+
+      - name: Debug environment before collection
+        run: |
+          echo "PostgreSQL status:"
+          docker compose exec -T postgres pg_isready -U $POSTGRES_USER
+          echo "MinIO status:"
+          docker compose exec -T minio-mc mc alias list || true
+          echo "Python packages:"
+          pip list | grep -E "(spacy|yake|pandas|sqlalchemy)"
+          echo "Environment variables:"
+          env | grep -E "(POSTGRES|MINIO|OWM|KAGGLE)" || echo "No API keys found"
 
       - name: Run daily collection notebook
         run: |
