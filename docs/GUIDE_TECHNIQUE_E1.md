@@ -443,6 +443,9 @@ Internet/Fichiers/APIs/Bases SQL
 - **Scalable** : Prêt pour des millions de docs (indexation, partitioning)
 - **Merise rigueur** : MCD/MLD académique pour l'archi BDD
 
+**Nouveau** : l'étape E2 dispose d'un script autonome `scripts/apply_annotation_pipeline.py` qui applique spaCy (NER) + YAKE (keywords) sur le dernier dataset GOLD, enrichit les colonnes `annotation_*`, exporte un Parquet/CSV sous `data/dataset/annotated/` et peut persister la polarité/intensité dans `t05_annotation` (`--write-db`).  
+Ce script est appelé après `05_snapshot_and_readme.ipynb` pour produire le dataset "AI-ready" réellement annoté.
+
 ### Use cases concrets
 
 **Pourquoi on fait ça ?**

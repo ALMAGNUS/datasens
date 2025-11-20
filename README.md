@@ -183,6 +183,16 @@ Variables principales :
 - **MinIO DataLake** : `MINIO_ENDPOINT`, `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`, `MINIO_BUCKET`
 - **API Keys** (optionnelles) : `OWM_API_KEY`, `NEWSAPI_KEY`, `KAGGLE_USERNAME`, `KAGGLE_KEY`, `REDDIT_CLIENT_ID`, `YOUTUBE_API_KEY`
 
+### Mode production (.env)
+
+- **Séparer les fichiers** : conservez un `.env.demo` (clés gratuites) pour les tests et un `.env.prod`/`.env.staging` chargé via `docker compose --env-file`, GitHub Actions secrets, Vault, Doppler, etc.
+- **Ne jamais committer les vraies clés** : stockez-les dans un secret manager ou des variables d'environnement CI/CD.
+- **Nouveaux flags utiles** :
+  - `ENABLE_ANNOTATION_PIPELINE` (défaut `1`) : active/désactive l'étape spaCy/YAKE dans le notebook 05.
+  - `ANNOTATION_WRITE_DB` (défaut `0`) : pousse les polarités/intensités dans `t05_annotation` lorsqu'on lance le pipeline.
+- **Rotation & audit** : changez régulièrement OWM/NewsAPI/Kaggle/Reddit, et logguez toute diffusion vers des environnements partagés.
+- **Rappel** : `.env.example` reste la seule version tracked ; chaque équipe duplique en `.env.local`, `.env.prod`, etc.
+
 **🔒 Sécurité** : 
 - Le fichier `.env` est ignoré par Git
 - Les notebooks refusent de créer un `.env` hors racine (message explicite dans `01_setup_env.ipynb`)
@@ -204,6 +214,27 @@ Annotation Simple (E1_v3) - Préparation Dataset pour E2
 - Sentiment/polarité (modèles FR)
 - NER (spaCy modèle FR)
 - Mots-clés (YAKE FR)
+
+### 🤖 Annotation IA automatique (spaCy + YAKE)
+
+La première brique E2 est automatisée via `scripts/apply_annotation_pipeline.py` :
+
+```bash
+# Annoter le dernier dataset GOLD disponible
+python scripts/apply_annotation_pipeline.py \
+    --spacy-model fr_core_news_md \
+    --output-dir data/dataset/annotated
+
+# Exemple avancé : dataset ciblé + écriture Postgres
+python scripts/apply_annotation_pipeline.py \
+    --input data/gold/dataset_ia/datasens_dataset_ia_20251118.parquet \
+    --write-db
+```
+
+Sorties :
+- Dataset annoté (colonnes `annotation_keywords_yake`, `annotation_entities_spacy`, `annotation_polarity`, `annotation_intensity`, `annotation_summary`)
+- Manifest JSON décrivant les exports générés
+- Option `--write-db` pour consigner la polarité/intensité dans `t05_annotation`
 
 Classification Types de Données (Médiamétrie)
 ---------------------------------------------

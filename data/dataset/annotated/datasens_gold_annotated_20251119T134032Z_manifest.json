@@ -1,0 +1,6 @@
+{
+  "generated_at": "2025-11-19T13:40:42.860149+00:00",
+  "rows": 98,
+  "parquet": "data\\dataset\\annotated\\datasens_gold_annotated_20251119T134032Z.parquet",
+  "csv": "data\\dataset\\annotated\\datasens_gold_annotated_20251119T134032Z.csv"
+}

@@ -6,16 +6,24 @@ The format is based on Keep a Changelog, and this project adheres to Semantic Ve
 
 ## [Unreleased]
 ### Added
-- (À compléter) Nouvelles sources, notebooks ou scripts.
+- Inventaire consolidé des sources dans `05_snapshot_and_readme.ipynb` (scan DataLake + tables PostgreSQL par source).
+- Nouvelle cellule d'export automatisé (Parquet/CSV) avec journalisation `LAST_EXPORT_FILES`.
+- Pipeline d'upload des exports vers MinIO, AWS S3 et artefacts locaux (manifest JSON).
+- Script `scripts/apply_annotation_pipeline.py` (annotation spaCy+YAKE + export annoté + insertion optionnelle t05).
+- Dépendance `boto3` pour activer l'upload S3.
 
 ### Changed
-- (À compléter)
+- `05_snapshot_and_readme.ipynb` détecte désormais la racine projet via `detect_project_root()` comme les autres notebooks.
+- Inventaire des fichiers bruts étendu (`baro_*`, `source_*`) et requêtes DB forcées sur `datasens` via `SET search_path`.
+- Section export IA restructure la logique (timestamp, stats, exposé clair des chemins).
 
 ### Fixed
-- (À compléter)
+- Comptes inventaire qui restaient à `N/A` à cause du `search_path` sur `public`.
+- TypeError lors de l'aperçu CRUD delete (`pd.read_sql_query` remplacé par `conn.execute` + DataFrame).
+- Export Parquet qui n'affichait pas correctement les warnings `datetime.utcnow()` (passage à `datetime.now(UTC)`).
 
 ### Security
-- (À compléter)
+- Rappel explicite des variables `.env` manquantes lors du chargement dans `05_snapshot_and_readme.ipynb`.
 
 ## [3.1.0] - 2025-11-10
 ### Added

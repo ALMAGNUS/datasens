@@ -36,6 +36,7 @@ openpyxl
 # Infrastructure
 minio
 prefect
+boto3
 
 # NLP & Annotation (E2/E3)
 spacy

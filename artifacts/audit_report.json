@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-11-19T14:24:11.051566+00:00",
+  "status": "OK",
+  "results": [
+    {
+      "name": "env",
+      "status": "OK",
+      "details": ".env chargé : C:\\Users\\Utilisateur\\Desktop\\DataSens\\.env"
+    },
+    {
+      "name": "postgres",
+      "status": "OK",
+      "details": "Connexion OK (localhost:5432/postgres) | Stats: t04_document=98, t03_flux=4, t02_source=15, t19_meteo=1, t25_evenement=1"
+    },
+    {
+      "name": "minio",
+      "status": "OK",
+      "details": "Bucket datasens-raw disponible (2 objets, prefixes=['raw', 'rss'])"
+    },
+    {
+      "name": "raw_files",
+      "status": "OK",
+      "details": "kaggle=4, api_owm=1, rss=5, scraping=1, gdelt=1, barometers=2, sources=2"
+    },
+    {
+      "name": "export_gold",
+      "status": "OK",
+      "details": "3 fichier(s) | dernier=datasens_gold_20251118T222736Z_ai_ready_20251118T235819Z.parquet"
+    },
+    {
+      "name": "export_annotated",
+      "status": "OK",
+      "details": "1 fichier(s) | dernier=datasens_gold_annotated_20251119T134032Z.parquet"
+    }
+  ]
+}
